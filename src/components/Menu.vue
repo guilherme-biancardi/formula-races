@@ -19,7 +19,7 @@
           v-model="data.season.year"
           minlength="4"
           maxlength="4"
-          placeholder="Pesquise por uma temporada"
+          placeholder="Search for a season"
           @input="onlyNumbers($event)"
           @change="data.season.year = verifyYear()"
           class="season-search"
