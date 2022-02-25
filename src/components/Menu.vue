@@ -85,8 +85,6 @@ export default {
         const { min, max, year } = data.season,
           verifications = [Number(year) < min, Number(year) > max];
 
-        console.log(year, min, verifications[0]);
-
         return verifications.some((value) => !!value) && year !== ""
           ? max
           : year;
