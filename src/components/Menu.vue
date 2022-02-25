@@ -19,7 +19,7 @@
           v-model="data.season.year"
           minlength="4"
           maxlength="4"
-          placeholder="Pesquise por uma temporada"
+          placeholder="Search for a season"
           @input="onlyNumbers($event)"
           @change="data.season.year = verifyYear()"
           class="season-search"
@@ -84,8 +84,6 @@ export default {
       verifyYear = () => {
         const { min, max, year } = data.season,
           verifications = [Number(year) < min, Number(year) > max];
-
-        console.log(year, min, verifications[0]);
 
         return verifications.some((value) => !!value) && year !== ""
           ? max

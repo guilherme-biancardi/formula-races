@@ -20,10 +20,15 @@
     </div>
     <Table
       :headers="
-        races.length ? ['posição', 'piloto', 'equipe', 'pontos ganhos'] : ['sem dados']
+        races.length
+          ? ['position', 'driver', 'team', 'points earned']
+          : ['no data']
       "
     >
-      <ul v-for="({Driver, Constructor, ...item}, index) in race" :key="index">
+      <ul
+        v-for="({ Driver, Constructor, ...item }, index) in race"
+        :key="index"
+      >
         <li>
           <span>{{ item.positionText }}</span>
         </li>
@@ -83,9 +88,9 @@ export default {
     const setRounds = () =>
       (data.rounds = races.value.map(({ raceName, time, date }) => ({
         raceName,
-        time: moment(`${date} ${time ? time.replace("Z", "") : ""}`)
-          .locale("pt-br")
-          .format(`${time ? "LLL" : "LL"}`),
+        time: moment(`${date} ${time ? time.replace("Z", "") : ""}`).format(
+          `${time ? "LLL" : "LL"}`
+        ),
       })));
 
     onMounted(setRounds);
@@ -129,7 +134,7 @@ export default {
   align-items: center;
   padding: 2px 12px;
   padding-right: 50px;
-  font-size: 0.85em;
+  font-size: 0.75em;
   border-radius: 5px;
   min-width: 210px;
 }

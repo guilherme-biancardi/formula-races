@@ -1,5 +1,5 @@
 <template>
-  <Table :headers="['posição', 'piloto', 'equipe', 'pontos']">
+  <Table :headers="['position', 'driver', 'team', 'points']">
     <ul
       v-for="({ Driver, Constructors, ...item }, index) in drivers"
       :key="index"
