@@ -2,8 +2,8 @@
   <Table
     :headers="
       constructors.length
-        ? ['posição', 'construtor', 'vitórias', 'pontos']
-        : ['Sem Dados']
+        ? ['position', 'constructor', 'wins', 'points']
+        : ['no data']
     "
   >
     <ul
