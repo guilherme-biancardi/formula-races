@@ -1,6 +1,5 @@
 # formula-one
 
-# formula-one
 See website: https://formula-races.netlify.app
 
 ## Project setup
