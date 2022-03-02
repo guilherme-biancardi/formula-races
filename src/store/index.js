@@ -1,24 +1,27 @@
 import {
   createStore
 } from "vuex"
+import VuexPersistence from "vuex-persist"
+import season from './modules/season';
+import drivers from './modules/drivers';
+import races from './modules/races';
+import constructors from './modules/constructors';
+import config from './modules/config';
+import cache from './modules/cache';
+
+const persist = new VuexPersistence({
+  storage: window.localStorage,
+  modules: ['season', 'config']
+})
 
 export default createStore({
-  state: {
-    season: 0,
-    drivers: [],
-    constructors: [],
-    races: []
+  modules:{
+    season,
+    drivers,
+    races,
+    constructors,
+    config,
+    cache
   },
-  getters: {
-    season: state => state.season,
-    drivers: state => state.drivers,
-    constructors: state => state.constructors,
-    races: state => state.races
-  },
-  mutations: {
-    setSeason: (state, year) => state.season = year,
-    setDrivers: (state, drivers) => state.drivers = drivers,
-    setConstructors: (state, constructors) => state.constructors = constructors,
-    setRaces: (state, races) => state.races = races
-  },
+  plugins:[persist.plugin]
 })

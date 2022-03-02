@@ -1,31 +1,35 @@
 <template>
-  <main>
-    <Menu :path="path"></Menu>
-    <router-view v-slot="{ Component }">
-      <transition name="fade" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+  <main :class="{ 'dark-mode': isDarkTheme }">
+    <Dark-mode-button></Dark-mode-button>
+    <section>
+      <Menu :path="path"></Menu>
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </section>
   </main>
 </template>
 
 <script>
 import { computed, watch } from "@vue/runtime-core";
 import Menu from "./components/Menu.vue";
-import axios from "axios";
 import { useBase } from "./baseMixin";
+import DarkModeButton from "./components/DarkModeButton.vue";
 
 export default {
-  components: { Menu },
+  components: { Menu, DarkModeButton },
   setup() {
-    const { store, route, moment } = useBase();
-
-    store.commit("setSeason", moment().year());
+    const { store, route, moment, axios } = useBase();
 
     const path = computed(() => route.path),
-      season = computed(() => store.getters.season);
+      season = computed(() => store.getters.season),
+      isDarkTheme = computed(() => store.getters.isDarkTheme);
 
-    const getDrivers = async () => {
+    !season.value ? store.commit("setSeason", moment().year()) : null;
+
+    const getDrivers = () => {
         axios
           .get(
             `${process.env.VUE_APP_FORMULA_API}/${season.value}/driverStandings.json?limit=1000`
@@ -33,10 +37,11 @@ export default {
           .then(({ data }) => {
             const [{ DriverStandings }] =
               data.MRData.StandingsTable.StandingsLists;
+
             store.commit("setDrivers", DriverStandings);
           });
       },
-      getConstructors = async () => {
+      getConstructors = () => {
         axios
           .get(
             `${process.env.VUE_APP_FORMULA_API}/${season.value}/constructorStandings.json?limit=1000`
@@ -52,28 +57,27 @@ export default {
             }
           });
       },
-      getRaces = async () => {
+      getRaces = () => {
         axios
           .get(
             `${process.env.VUE_APP_FORMULA_API}/${season.value}/results.json?limit=1000`
           )
           .then(({ data }) => {
-            const {Races} = data.MRData.RaceTable
-            store.commit("setRaces", Races); 
+            const { Races } = data.MRData.RaceTable;
+            store.commit("setRaces", Races);
           });
       };
 
-    const getAll = () => {
-      getDrivers();
-      getConstructors();
-      getRaces();
+    const getAll = async () => {
+      await Promise.all([getConstructors(), getRaces(), getDrivers()]);
     };
 
-    getAll();
+    getAll()
     watch(season, getAll);
 
     return {
       path,
+      isDarkTheme,
     };
   },
 };
@@ -89,31 +93,34 @@ img {
 @font-face {
   font-family: "f1-regular";
   src: url("./assets/font/Formula1-Regular.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "f1-bold";
   src: url("./assets/font/Formula1-Bold.ttf");
+  font-display: swap;
 }
 
 @font-face {
-  font-family: 'f1-black';
-  src: url('./assets/font/Formula1-Black.ttf');
-}
-
-@font-face {
-  font-family: 'f1-wide';
-  src: url('./assets/font/Formula1-Wide.ttf');
+  font-family: "f1-black";
+  src: url("./assets/font/Formula1-Black.ttf");
+  font-display: swap;
 }
 
 :root {
   --body: #f0f0f0;
   --red: #e10600;
-  --f1-bold: "f1-bold";
-  --f1-regular: 'f1-regular';
-  --f1-black: 'f1-black';
-  --f1-wide: 'f1-wide';
+  --f1-bold: "f1-bold", sans-serif;
+  --f1-regular: "f1-regular", sans-serif;
+  --f1-black: "f1-black", sans-serif;
+  --f1-wide: "f1-wide", sans-serif;
   --text: #222;
+}
+
+.dark-mode {
+  --body: #2f2f2f;
+  --text: #e9e9e9;
 }
 
 * {
@@ -121,6 +128,8 @@ img {
   padding: 0;
   box-sizing: border-box;
   font-family: "f1-regular", sans-serif;
+  transition: background-color 0.2s cubic-bezier(0.165, 0.84, 0.44, 1),
+    border-color 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 *::-webkit-scrollbar-track {
@@ -134,15 +143,6 @@ img {
   border-radius: 8px;
 }
 
-body {
-  background-color: var(--body);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: var(--text);
-}
-
 ul {
   list-style: none;
 }
@@ -154,6 +154,16 @@ button {
 }
 
 main {
+  width: 100%;
+  background-color: var(--body);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--text);
+}
+
+section {
   display: flex;
   flex-direction: column;
   justify-content: center;

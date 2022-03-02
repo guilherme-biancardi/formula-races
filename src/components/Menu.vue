@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { onUpdated, reactive } from "@vue/runtime-core";
+import { onMounted, onUpdated, reactive } from "@vue/runtime-core";
 import Icon from "./utilities/Icon.vue";
 import { useBase } from "../baseMixin";
 
@@ -44,7 +44,7 @@ export default {
     path: String,
   },
   setup(props) {
-    const { store} = useBase();
+    const { store, moment } = useBase();
 
     const data = reactive({
       typeSelected: undefined,
@@ -61,6 +61,10 @@ export default {
           route: "/races",
           icon: "mdi-flag-checkered",
         },
+        {
+          route: "/graphics",
+          icon: "mdi-monitor-dashboard",
+        },
       ],
       season: {
         year: undefined,
@@ -70,7 +74,11 @@ export default {
       },
     });
 
-    data.season.max = data.season.seasonText = store.getters.season;
+    onMounted(() => {
+      const season = store.getters.season, year = moment().year()
+      data.season.seasonText = !season ? year : season
+      data.season.max = year
+    })
 
     onUpdated(() => {
       data.typeSelected = data.typesTable.findIndex(
@@ -90,9 +98,14 @@ export default {
           : year;
       },
       search = () => {
-        store.commit("setSeason", data.season.year);
-        data.season.seasonText = data.season.year;
-        data.season.year = null;
+        const { min, max, year } = data.season,
+          verifications = [Number(year) < min, Number(year) > max, year === undefined];
+
+        if (!verifications.some((value) => value)) {
+          store.commit("setSeason", Number(year));
+          data.season.seasonText = year;
+          data.season.year = null;
+        }
       };
 
     return {
@@ -112,6 +125,13 @@ nav {
   align-items: center;
   justify-content: space-between;
   column-gap: 64px;
+  --primary: white;
+  --color-icon: var(--red);
+}
+
+.dark-mode nav{
+  --primary: #252525;
+  --color-icon: #dadada;
 }
 
 .types-table-list {
@@ -121,8 +141,8 @@ nav {
 
 .types-table-item,
 .season-search {
-  background-color: white;
-  color: var(--red);
+  background-color: var(--primary);
+  color: var(--color-icon);
   padding: 8px 12px;
   font-size: 1.5em;
   border-radius: 5px;
