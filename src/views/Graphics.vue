@@ -162,6 +162,7 @@ export default {
     };
 
     const setRounds = () => {
+      store.commit("resetCache");
       getDriverResult(0);
       data.rounds = races.value.map(({ raceName }) => ({ raceName }));
     };
