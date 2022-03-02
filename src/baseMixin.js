@@ -5,11 +5,13 @@ import {
 import {
     useStore
 } from 'vuex';
+import axios from 'axios';
 
 export const useBase = () => {
     return {
         route: useRoute(),
         store: useStore(),
-        moment
+        moment,
+        axios
     }
 }

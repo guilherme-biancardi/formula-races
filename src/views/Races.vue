@@ -8,7 +8,7 @@
         </h2>
         <p>{{ round ? round.time : "" }}</p>
       </div>
-      <select v-model="data.raceSelected">
+      <Select @select="selectRace">
         <option
           :value="index"
           v-for="(round, index) in data.rounds"
@@ -16,7 +16,7 @@
         >
           {{ round.raceName }}
         </option>
-      </select>
+      </Select>
     </div>
     <Table
       :headers="
@@ -47,15 +47,16 @@ import { reactive } from "@vue/reactivity";
 import { useBase } from "../baseMixin";
 import Table from "../components/utilities/Table.vue";
 import { computed, onMounted, watch } from "@vue/runtime-core";
+import Select from "../components/utilities/Select.vue";
 
 export default {
-  components: { Table },
+  components: { Table, Select },
   setup() {
     const { store, moment } = useBase();
 
     const data = reactive({
       raceSelected: 0,
-      rounds: [],
+      rounds: []
     });
 
     const races = computed(() => store.getters.races),
@@ -93,6 +94,8 @@ export default {
         ),
       })));
 
+    const selectRace = (value) => (data.raceSelected = value);
+
     onMounted(setRounds);
     watch(races, setRounds);
 
@@ -102,6 +105,7 @@ export default {
       round,
       races,
       race,
+      selectRace,
     };
   },
 };
@@ -112,6 +116,12 @@ export default {
   display: flex;
   flex-direction: column;
   row-gap: 14px;
+
+  --date: #444;
+}
+
+.dark-mode .races-content{
+   --date: #999;
 }
 
 .races-content,
@@ -122,21 +132,6 @@ export default {
 .circuit-content {
   display: flex;
   justify-content: space-between;
-}
-
-.circuit-content select {
-  all: unset;
-  background: url("../assets/chevron-down.svg") no-repeat;
-  background-position: 245px center;
-  background-size: 20px;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  padding: 2px 12px;
-  padding-right: 50px;
-  font-size: 0.75em;
-  border-radius: 5px;
-  min-width: 210px;
 }
 
 .circuit-text {
@@ -152,11 +147,12 @@ export default {
 
 .circuit-text h2 span {
   font-size: 0.95em;
+  
 }
 
 .circuit-text p {
   font-size: 0.74em;
-  color: #444;
+  color: var(--date);
   font-weight: 100;
 }
 </style>

@@ -23,16 +23,28 @@ export default {
   border-radius: 5px;
   overflow: hidden;
   min-height: 382px;
+
+  --primary: white;
+  --table-header: #f7f7f7;
+  --border: #f3f3f3;
 }
 
-.table-header{
-  background-color: #f7f7f7 !important;
+.dark-mode .table {
+  --primary: #252525;
+  --table-header: #292929;
+  --border: #282828;
 }
 
-.table-header li{
-    text-transform: capitalize;
-    color: var(--red);
-    font-size: 0.82em !important;
+.table-header {
+  background-color: var(--table-header) !important;
+}
+
+.table-header li {
+  text-transform: capitalize;
+  color: var(--red);
+  font-size: 0.8em !important;
+  font-family: var(--f1-bold);
+  font-weight: 100;
 }
 
 .table ul {
@@ -41,12 +53,12 @@ export default {
   display: grid;
   grid-template-columns: 15% 35% repeat(2, 25%);
   justify-items: center;
-  background-color: white;
-  border-bottom: 1px solid #f3f3f3;
+  background-color: var(--primary);
+  border-bottom: 1px solid var(--border);
 }
 
-.table ul li{
-    font-size: 0.9em;
+.table ul li {
+  font-size: 0.9em;
 }
 
 .table-scroll {
@@ -55,7 +67,7 @@ export default {
   overflow-y: overlay;
 }
 
-span{
-    font-family: var(--f1-bold);
+span {
+  font-family: var(--f1-bold);
 }
 </style>
