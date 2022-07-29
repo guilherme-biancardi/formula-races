@@ -5,7 +5,7 @@
     <line-chart
       class="graphic"
       :data="data"
-      :colors="['#e10600', '#000']"
+      :colors="['#e10600', '#a55eea']"
       :max="max"
       :min="0"
       ytitle="Points"
