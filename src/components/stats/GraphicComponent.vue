@@ -1,59 +1,53 @@
 <template>
   <LoadingComponent v-if="isLoading"></LoadingComponent>
   <div class="graphic-content" v-else>
-    <h2>Points earned during the season:</h2>
-    <line-chart
-      class="graphic"
-      :data="data"
-      :colors="['#e10600', '#a55eea']"
-      :max="max"
-      :min="0"
-      ytitle="Points"
-      xtitle="Races"
-      width="100%"
-      height="100%"
-      :dataset="{ borderWidth: 2.5 }"
-      :library="{
-        scales: {
-          x: colorAxis,
-          y: colorAxis
-        }
-      }"
-    ></line-chart>
+    <div>
+      <h2>{{ title }}</h2>
+      <ul class="select-list">
+        <li
+          v-for="(item, i) in state.selectArray"
+          :key="i"
+          :class="{ selected: index === i }"
+        >
+          <button @click="emit('selectGraphic', i)">
+            <MaterialIcon :icon="item"></MaterialIcon>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <slot></slot>
   </div>
 </template>
 
 <script setup>
-import { useStore } from '@/store/store'
-import { useThemeStore } from '@/store/theme'
-import { computed } from 'vue'
+import { reactive } from 'vue'
 import LoadingComponent from '../utilities/LoadingComponent.vue'
-
-const store = useStore()
-const themeStore = useThemeStore()
+import MaterialIcon from '../utilities/MaterialIcon.vue'
 
 defineProps({
-  data: Object,
-  isLoading: Boolean
+  title: String,
+  isLoading: Boolean,
+  index: Number
 })
 
-const max = computed(() => store.getMaxPoints)
+const emit = defineEmits(['selectGraphic'])
 
-const isDarkTheme = computed(() => themeStore.getTheme)
-const colorAxis = computed(() => ({
-  title: { color: `${isDarkTheme.value ? '#ccc' : '#111'}` }
-}))
+const state = reactive({
+  selectArray: ['mdi-checkbox-blank-circle', 'mdi-checkbox-blank-circle']
+})
 </script>
 
 <style scoped>
 .graphic-content {
   --graphic: #fff;
   --text: var(--red);
+  --button: #cacaca;
 }
 
 .dark-mode .graphic-content {
   --graphic: #252525;
   --text: #eee;
+  --button: #777;
 }
 
 .graphic-content {
@@ -66,9 +60,31 @@ const colorAxis = computed(() => ({
   row-gap: 16px;
 }
 
+.graphic-content > div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.select-list {
+  display: flex;
+  column-gap: 8px;
+}
+
 h2 {
   font-size: 1em;
   color: var(--text);
   font-weight: 100;
+}
+
+button {
+  background-color: transparent;
+  color: var(--button);
+  font-size: 1em;
+}
+
+.selected > button {
+  color: var(--red);
 }
 </style>

@@ -11,10 +11,12 @@
     <TableComponent
       :headers="races ? ['position', 'driver', 'team', 'points earned'] : null"
       :rows="9"
+      :columns="4"
     >
       <TableItem
         v-for="({ Driver, Constructor, ...item }, index) in race.getResult()"
         :key="index"
+        columns="4"
       >
         <li>
           <span>{{ item.positionText }}</span>

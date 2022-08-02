@@ -41,7 +41,7 @@ const emit = defineEmits(['setDriverName'])
 
 const changeDriver = () => {
   state.index = !state.index
-  emit('setDriverName', props.drivers[Number(state.index)])
+  emit('setDriverName', props.drivers[Number(state.index)].index)
 }
 
 watch(
