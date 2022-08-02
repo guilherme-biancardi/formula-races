@@ -20,7 +20,6 @@
           y: colorAxis
         }
       }"
-      :legend="false"
     ></bar-chart>
   </GraphicComponent>
 </template>
