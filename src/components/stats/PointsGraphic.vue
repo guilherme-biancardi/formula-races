@@ -22,7 +22,6 @@
           y: colorAxis
         }
       }"
-      :legend="false"
     ></line-chart>
   </GraphicComponent>
 </template>
