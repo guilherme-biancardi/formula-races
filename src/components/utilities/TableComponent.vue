@@ -4,7 +4,10 @@
     :class="{ 'shadow-table': headers }"
     :style="`--rows: ${rows}`"
   >
-    <ul class="table-header">
+    <ul
+      class="table-header"
+      :style="`grid-template-columns: var(--columns-${columns})`"
+    >
       <li v-for="(header, index) in headers || ['no data']" :key="index">
         {{ header }}
       </li>
@@ -18,7 +21,8 @@
 <script setup>
 defineProps({
   headers: Array,
-  rows: Number
+  rows: Number,
+  columns: Number
 })
 </script>
 
@@ -33,6 +37,9 @@ defineProps({
   --table-header: #f7f7f7;
   --border: #f3f3f3;
   --height-table: calc(42px * var(--rows));
+
+  --columns-4: 15% 35% repeat(2, 25%);
+  --columns-5: 15% 31% repeat(2, 25%) 4%;
 }
 
 .shadow-table {
@@ -50,7 +57,6 @@ defineProps({
   width: 100%;
   height: 36px;
   display: grid;
-  grid-template-columns: 15% 35% repeat(2, 25%);
   justify-items: center;
   align-items: center;
   background-color: var(--table-header);

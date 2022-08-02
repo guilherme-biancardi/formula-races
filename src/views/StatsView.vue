@@ -10,7 +10,7 @@
           :value="index"
           v-for="({ Driver }, index) in drivers"
           :key="index"
-          :disabled="state.driversListExcludes.some((i) => i === index)"
+          :disabled="state.driversListExcludes.some((i) => i.index === index)"
         >
           {{ Driver.givenName }} {{ Driver.familyName }}
         </option>
@@ -30,7 +30,7 @@
         <option
           :value="index"
           v-for="({ Driver }, index) in drivers"
-          :disabled="state.driversListExcludes.some((i) => i === index)"
+          :disabled="state.driversListExcludes.some((i) => i.index === index)"
           :key="index"
         >
           {{ Driver.givenName }} {{ Driver.familyName }}
@@ -51,10 +51,15 @@
     </SelectComponent>
   </div>
   <div class="stats-content">
-    <GraphicComponent
+    <component
+      :is="state.graphicsArray[state.graphicSelected]"
       :data="state.graphic"
       :isLoading="state.loading"
-    ></GraphicComponent>
+      :index="state.graphicSelected"
+      :results="state.results"
+      :driversName="state.driversListExcludes"
+      @selectGraphic="selectGraphic"
+    ></component>
     <DriverRace
       :result="state.results"
       :race="races[state.raceSelected]"
@@ -69,8 +74,9 @@
 
 <script setup>
 import { useStore } from '@/store/store'
-import { computed, onBeforeMount, reactive, watch } from 'vue'
-import GraphicComponent from '../components/stats/GraphicComponent.vue'
+import { computed, onBeforeMount, reactive, shallowRef, watch } from 'vue'
+import PointsGraphic from '@/components/stats/PointsGraphic.vue'
+import DriverGraphic from '@/components/stats/DriverGraphic.vue'
 import { useDriverResult } from '@/js/driverResult'
 import { useApp } from '@/js/app'
 import DriverRace from '@/components/stats/DriverRace.vue'
@@ -97,10 +103,13 @@ const state = reactive({
   loading: true,
   compareDrivers: false,
   selectIndex: 0,
-  driversListExcludes: []
+  driversListExcludes: [],
+  graphicsArray: shallowRef([PointsGraphic, DriverGraphic]),
+  graphicSelected: 0
 })
 
 const selectRace = (index) => (state.raceSelected = index)
+const selectGraphic = (index) => (state.graphicSelected = index)
 
 const reset = () => {
   state.graphic = state.graphic.slice(0, 1)
@@ -108,8 +117,6 @@ const reset = () => {
   state.driversListExcludes = state.driversListExcludes.slice(0, 1)
 
   state.selectIndex = 0
-  state.driverName =
-    drivers.value[state.driversListExcludes[0]].Driver.familyName
   state.compareDrivers = false
 }
 
@@ -135,7 +142,10 @@ const selectDriver = async (index) => {
   state.driverName = familyName
   state.driverSelected = state.selectIndex
 
-  state.driversListExcludes[state.selectIndex] = index
+  state.driversListExcludes[state.selectIndex] = {
+    index,
+    name: `${givenName} ${familyName}`
+  }
 
   statsStore.setDriverStat(graphic, results, driverId)
   state.loading = false
@@ -147,6 +157,8 @@ watch(drivers, () => {
   statsStore.cleanStats()
   selectDriver(0)
 })
+
+watch(season, reset)
 </script>
 
 <style scoped>
