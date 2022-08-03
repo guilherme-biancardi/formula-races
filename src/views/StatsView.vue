@@ -42,7 +42,9 @@
     </div>
 
     <SelectComponent
-      :label="`select ${state.driverName} race:`"
+      :label="`select ${
+        state.driversListExcludes[state.selectIndex]?.name || ''
+      } race:`"
       @select="selectRace"
     >
       <option :value="index" v-for="(race, index) in races" :key="index">
@@ -66,7 +68,6 @@
       :compareDrivers="state.compareDrivers"
       :raceSelected="state.raceSelected"
       :index="state.selectIndex"
-      :drivers="state.driversListExcludes"
       @setDriverName="setDriverName"
     ></DriverRace>
   </div>
@@ -99,7 +100,6 @@ const state = reactive({
   graphic: [],
   results: [],
   raceSelected: 0,
-  driverName: '',
   loading: true,
   compareDrivers: false,
   selectIndex: 0,
@@ -120,8 +120,7 @@ const reset = () => {
   state.compareDrivers = false
 }
 
-const setDriverName = (index) =>
-  (state.driverName = drivers.value[index].Driver.familyName)
+const setDriverName = (index) => (state.selectIndex = index)
 
 const selectDriver = async (index) => {
   state.loading = true
@@ -138,9 +137,6 @@ const selectDriver = async (index) => {
   }
 
   state.results[state.selectIndex] = results
-
-  state.driverName = familyName
-  state.driverSelected = state.selectIndex
 
   state.driversListExcludes[state.selectIndex] = {
     index,

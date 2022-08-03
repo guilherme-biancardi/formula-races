@@ -21,27 +21,28 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, watch } from 'vue'
+import { computed, reactive, watch } from 'vue'
 import MaterialIcon from '../utilities/MaterialIcon.vue'
 
 const props = defineProps({
   result: Object,
   race: Object,
   compareDrivers: Boolean,
-  index: Number,
   raceSelected: Number,
-  drivers: Array
+  index: Number
 })
 
 const state = reactive({
-  index: false
+  index: null
 })
 
 const emit = defineEmits(['setDriverName'])
 
+const indexNumber = computed(() => Number(state.index))
+
 const changeDriver = () => {
   state.index = !state.index
-  emit('setDriverName', props.drivers[Number(state.index)].index)
+  emit('setDriverName', indexNumber.value)
 }
 
 watch(
@@ -49,12 +50,10 @@ watch(
   (index) => (state.index = index)
 )
 
-onMounted(() => (state.index = props.index))
-
 const driverRace = computed(() => {
   try {
     const { grid, FastestLap, positionText, status } =
-      props.result[Number(state.index)][props.raceSelected]
+      props.result[indexNumber.value][props.raceSelected]
     const { url, raceName } = props.race
 
     return [

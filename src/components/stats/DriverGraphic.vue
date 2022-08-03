@@ -5,11 +5,12 @@
     :index="index"
     @selectGraphic="selectGraphic"
   >
-    <bar-chart
+    <column-chart
       class="graphic"
       :data="state.driversStats"
       :colors="['#e10600', `${isDarkTheme ? '#e0e0e0' : '#3a3a3a'}`]"
       :min="0"
+      :max="maxRounds"
       width="100%"
       height="100%"
       xtitle="Statistics"
@@ -20,7 +21,7 @@
           y: colorAxis
         }
       }"
-    ></bar-chart>
+    ></column-chart>
   </GraphicComponent>
 </template>
 
@@ -52,6 +53,7 @@ const colorAxis = computed(() => ({
 }))
 const season = computed(() => store.getSeason)
 const drivers = computed(() => props.driversName)
+const maxRounds = computed(() => props.results[0].length)
 
 const selectGraphic = (index) => emit('selectGraphic', index)
 
@@ -61,12 +63,14 @@ const generateGraphic = (array) =>
   array.forEach((driver, index) => {
     state.driversStats[index] = {
       name: props.driversName[index].name,
-      data: { 'Pole Positions': 0, Wins: 0, DNFs: 0 }
+      data: { 'Pole Positions': 0, Wins: 0, DNFs: 0, 'Fastest Laps': 0 }
     }
-    driver.forEach(({ grid, position, status }) => {
+    driver.forEach(({ grid, position, status, FastestLap, ...teste }) => {
       if (grid === '1') setStat(index, 'Pole Positions')
       if (position === '1') setStat(index, 'Wins')
       if (status !== 'Finished' && !status.match('Lap')) setStat(index, 'DNFs')
+      if (FastestLap?.rank === '1') setStat(index, 'Fastest Laps')
+      if (!FastestLap) delete state.driversStats[index].data['Fastest Laps']
     })
   })
 
