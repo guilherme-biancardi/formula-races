@@ -5,12 +5,12 @@
       <h2>{{ title }}</h2>
       <ul class="select-list">
         <li
-          v-for="(item, i) in state.selectArray"
+          v-for="(item, i) in length"
           :key="i"
           :class="{ selected: index === i }"
         >
           <button @click="emit('selectGraphic', i)">
-            <MaterialIcon :icon="item"></MaterialIcon>
+            <MaterialIcon :icon="'mdi-checkbox-blank-circle'"></MaterialIcon>
           </button>
         </li>
       </ul>
@@ -20,21 +20,17 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
 import LoadingComponent from '../utilities/LoadingComponent.vue'
 import MaterialIcon from '../utilities/MaterialIcon.vue'
 
 defineProps({
   title: String,
   isLoading: Boolean,
-  index: Number
+  index: Number,
+  length: Number
 })
 
 const emit = defineEmits(['selectGraphic'])
-
-const state = reactive({
-  selectArray: ['mdi-checkbox-blank-circle', 'mdi-checkbox-blank-circle']
-})
 </script>
 
 <style scoped>
@@ -73,7 +69,7 @@ const state = reactive({
 }
 
 h2 {
-  font-size: 1em;
+  font-size: 1.06em;
   color: var(--text);
   font-weight: 100;
 }

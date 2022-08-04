@@ -3,6 +3,7 @@
     :title="'Other season statistics:'"
     :isLoading="isLoading"
     :index="index"
+    :length="length"
     @selectGraphic="selectGraphic"
   >
     <column-chart
@@ -38,7 +39,8 @@ const props = defineProps({
   isLoading: Boolean,
   index: Number,
   results: Array,
-  driversName: Array
+  driversName: Array,
+  length: Number
 })
 
 const emit = defineEmits(['selectGraphic'])

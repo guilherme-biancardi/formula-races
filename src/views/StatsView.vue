@@ -60,6 +60,9 @@
       :index="state.graphicSelected"
       :results="state.results"
       :driversName="state.driversListExcludes"
+      :length="state.graphicsArray.length"
+      :race="races[state.raceSelected]"
+      :raceSelected="state.raceSelected"
       @selectGraphic="selectGraphic"
     ></component>
     <DriverRace
@@ -86,6 +89,7 @@ import { useDriversStore } from '@/store/drivers'
 import { useRacesStore } from '@/store/races'
 import { useStatsStore } from '@/store/stats'
 import MaterialIcon from '@/components/utilities/MaterialIcon.vue'
+import QualifyingDriver from '@/components/stats/QualifyingDriver.vue'
 
 const store = useStore()
 const statsStore = useStatsStore()
@@ -104,7 +108,7 @@ const state = reactive({
   compareDrivers: false,
   selectIndex: 0,
   driversListExcludes: [],
-  graphicsArray: shallowRef([PointsGraphic, DriverGraphic]),
+  graphicsArray: shallowRef([PointsGraphic, DriverGraphic, QualifyingDriver]),
   graphicSelected: 0
 })
 
@@ -140,7 +144,8 @@ const selectDriver = async (index) => {
 
   state.driversListExcludes[state.selectIndex] = {
     index,
-    name: `${givenName} ${familyName}`
+    name: `${givenName} ${familyName}`,
+    driverId
   }
 
   statsStore.setDriverStat(graphic, results, driverId)

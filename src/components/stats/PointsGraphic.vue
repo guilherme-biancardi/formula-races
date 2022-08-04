@@ -3,6 +3,7 @@
     :isLoading="isLoading"
     :title="'Points earned during the season:'"
     :index="index"
+    :length="length"
     @selectGraphic="selectGraphic"
   >
     <line-chart
@@ -11,7 +12,6 @@
       :colors="['#e10600', `${isDarkTheme ? '#e0e0e0' : '#3a3a3a'}`]"
       :max="max"
       :min="0"
-      ytitle="Points"
       xtitle="Races"
       width="100%"
       height="100%"
@@ -38,7 +38,8 @@ const themeStore = useThemeStore()
 defineProps({
   isLoading: Boolean,
   index: Number,
-  data: Object
+  data: Object,
+  length: Number
 })
 
 const emit = defineEmits(['selectGraphic'])
