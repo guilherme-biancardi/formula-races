@@ -88,7 +88,10 @@ getQualifying(props.driversName)
 
 watch(
   computed(() => props.driversName),
-  (drivers) => getQualifying(drivers),
+  (drivers) => {
+    state.driversQualifying = []
+    getQualifying(drivers)
+  },
   { deep: true }
 )
 </script>
