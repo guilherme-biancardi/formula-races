@@ -44,9 +44,9 @@ import IconComponent from "./utilities/IconComponent.vue";
 import ButtonSeason from "./utilities/ButtonSeason.vue";
 
 const formulaStore = useFormulaStore();
-const { parseDatetime, getNowFromFormat } = useDatetime();
+const { parseDatetime, getNow } = useDatetime();
 
-const currentYear = parseInt(getNowFromFormat("yyyy"));
+const currentYear = getNow().year
 
 const season = computed(() => parseDatetime(formulaStore.getSeason, "yyyy"));
 const previous = computed(() => state.previousSeason >= minSeasonYear);

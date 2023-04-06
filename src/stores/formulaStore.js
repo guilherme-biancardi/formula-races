@@ -2,11 +2,13 @@ import { defineStore } from "pinia";
 import { computed, reactive } from "vue";
 import { useDatetime } from "../utils/datetime";
 
-const { getNowFromFormat } = useDatetime();
+const { getNow } = useDatetime();
+
+const currentYear = getNow().year
 
 export const useFormulaStore = defineStore("formula", () => {
   const state = reactive({
-    season: getNowFromFormat("yyyy"),
+    season: currentYear,
   });
 
   const setSeason = (season) => (state.season = season);
