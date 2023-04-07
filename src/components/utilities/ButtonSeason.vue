@@ -1,5 +1,5 @@
 <template>
-  <button type="button" @click="click" class="button-season">
+  <button type="button" @click="click">
     {{ year }}
   </button>
 </template>
@@ -12,9 +12,19 @@ defineProps({
 </script>
 
 <style scoped>
-.button-season {
-  background-color: var(--input);
-  border: 1px solid var(--input-border);
+.light button {
+  --button: #fff;
+  --button-border: #ccc;
+}
+
+.dark button{
+  --button: #1b1b1b;
+  --button-border: #282828;
+}
+
+button {
+  background-color: var(--button);
+  border: 1px solid var(--button-border);
   border-radius: 8px;
   padding: 4px 10px;
   font-size: 0.8em;
@@ -22,9 +32,9 @@ defineProps({
   transition: all 0.2s ease;
 }
 
-.button-season:hover {
+button:hover {
   background-color: var(--primary);
   color: #fff;
-  border-color: #ff0000;
+  border-color: transparent;
 }
 </style>

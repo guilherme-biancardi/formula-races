@@ -94,6 +94,12 @@ onMounted(setYearsOfSeasons);
   --icon: #888;
 }
 
+.dark header {
+  --input: #1b1b1b;
+  --input-border: #282828;
+  --icon: #666;
+}
+
 header {
   width: 100%;
   display: flex;
@@ -111,6 +117,7 @@ header {
   background-color: var(--input);
   border: 1px solid var(--input-border);
   border-radius: 8px;
+  color: var(--text);
 }
 
 .input-search {
