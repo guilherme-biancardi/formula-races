@@ -14,7 +14,7 @@ defineProps({
 <style scoped>
 .light button {
   --button: #fff;
-  --button-border: #ccc;
+  --button-border: #ddd;
 }
 
 .dark button{

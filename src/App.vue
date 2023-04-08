@@ -1,31 +1,24 @@
 <template>
-  <MenuComponent></MenuComponent>
-  <section>
-    <SearchComponent></SearchComponent>
-    <RouterView name="app"></RouterView>
-  </section>
+  <Suspense :key="state.reload">
+    <MainContent></MainContent>
+    <template #fallback> Loading... </template>
+  </Suspense>
 </template>
 
 <script setup>
-import MenuComponent from "./components/MenuComponent.vue";
-import SearchComponent from "./components/SearchComponent.vue";
-import { RouterView } from "vue-router";
+import { reactive, watch } from "vue";
+import MainContent from "./components/MainContent.vue";
+import { useFormulaStore } from "./stores/formulaStore";
+
+const formulaStore = useFormulaStore();
+
+const state = reactive({
+  reload: 0,
+});
+
+const setReload = () => state.reload++;
+
+watch(() => formulaStore.getSeason, setReload);
 </script>
 
-<style scoped>
-.logo {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  max-width: 82px;
-}
-
-section {
-  display: flex;
-  flex-direction: column;
-  row-gap: 12px;
-  width: calc(100% - 70px);
-  margin-left: 70px;
-  padding: 0 10%;
-}
-</style>
+<style scoped></style>

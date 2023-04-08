@@ -90,7 +90,7 @@ onMounted(setYearsOfSeasons);
 <style scoped>
 .light header {
   --input: #fff;
-  --input-border: #ccc;
+  --input-border: #ddd;
   --icon: #888;
 }
 
