@@ -3,11 +3,10 @@ import { computed, reactive, watch } from "vue";
 
 export const useAppStore = defineStore("app", () => {
   const state = reactive({
-    theme: null,
+    theme: 'dark',
   });
 
   const getTheme = computed(() => state.theme);
-
   const setTheme = (theme) => (state.theme = theme);
 
   watch(
