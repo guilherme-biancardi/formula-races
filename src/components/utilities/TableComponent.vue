@@ -62,14 +62,17 @@ defineProps({
   color: var(--primary);
 }
 
+.table-body{
+  height: 42px;
+}
+
 .table-body span {
   font-family: var(--font-bold);
   font-weight: 600;
-  height: 40px;
 }
 
 .table-scroll {
-  max-height: calc(var(--rows) * 41px);
+  max-height: calc(var(--rows) * 42px);
   overflow: auto;
 }
 

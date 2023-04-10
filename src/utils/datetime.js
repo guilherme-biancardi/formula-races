@@ -6,8 +6,8 @@ import { DateTime } from "luxon";
  * @param {string} format exemplo: yyyy, dd/LL/yyyy
  * @returns {DateTime} retorna um objeto DateTimedo luxon
  */
-const parseDatetime = (date, format) =>
-  DateTime.fromFormat(String(date), format);
+const parseDatetime = (date, format, zone = 'local') =>
+  DateTime.fromFormat(String(date), format, { zone });
 
 const getNow = () => DateTime.now();
 

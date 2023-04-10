@@ -1,6 +1,6 @@
 <template>
   <TableComponent
-    :headers="['posicao', 'nome', 'equipe', 'pontos']"
+    :headers="['posicao', 'piloto', 'equipe', 'pontos']"
     :table-style="$style.table"
     :max-rows="10"
   >
@@ -38,6 +38,6 @@ const formulaStore = useFormulaStore()
 
 <style module>
 :export {
-  table: repeat(4, 1fr) 0.5fr;
+  table: repeat(4, 1fr) 0.2fr;
 }
 </style>

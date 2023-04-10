@@ -1,24 +1,15 @@
 <template>
-  <Suspense :key="state.reload">
+  <Suspense :key="formulaStore.getSeason">
     <MainContent></MainContent>
-    <template #fallback> Loading... </template>
+    <template #fallback> carregando... </template>
   </Suspense>
 </template>
 
 <script setup>
-import { reactive, watch } from "vue";
 import MainContent from "./components/MainContent.vue";
 import { useFormulaStore } from "./stores/formulaStore";
 
 const formulaStore = useFormulaStore();
-
-const state = reactive({
-  reload: 0,
-});
-
-const setReload = () => state.reload++;
-
-watch(() => formulaStore.getSeason, setReload);
 </script>
 
 <style scoped></style>
