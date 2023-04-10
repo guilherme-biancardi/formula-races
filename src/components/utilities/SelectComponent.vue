@@ -19,19 +19,14 @@ defineProps({
 </script>
 
 <style scoped>
-.light select {
-  --background: #fff;
-  --border: #ddd;
-}
-
 select {
   all: unset;
   min-width: 24ch;
   height: fit-content;
   padding: 10px 12px;
   padding-right: 32px;
-  background-color: var(--background);
-  border: 1px solid var(--border);
+  background-color: var(--light);
+  border: 1px solid var(--light-medium);
   background-image: url("../../assets/image/chevron-down.svg");
   background-repeat: no-repeat;
   background-position: calc(100% - 6px);

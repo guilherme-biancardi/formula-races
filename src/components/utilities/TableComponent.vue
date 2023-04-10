@@ -23,25 +23,21 @@ defineProps({
 }
 
 .light .table {
-  --table-background: #fff;
-  --table-border: #ddd;
   --table-header: #fafafa;
   --border-item: #f0f0f0;
   
 }
 
 .dark .table {
-  --table-background: #1b1b1b;
-  --table-border: #282828;
   --table-header: #1f1f1f;
   --border-item: #242424;
   --rows: 0;
 }
 
 .table {
-  background-color: var(--table-background);
+  background-color: var(--light);
   border-radius: 10px;
-  border: 1px solid var(--table-border);
+  border: 1px solid var(--light-medium);
   display: flex;
   flex-direction: column;
   overflow: hidden;

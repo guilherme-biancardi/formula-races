@@ -24,12 +24,16 @@
   --background: #efefef;
   --text: #333;
   --primary: #e10600;
+  --light: #fff;
+  --light-medium: #ddd;
 }
 
 .dark {
   --background: #222;
   --text: #eee;
   --primary: #df332e;
+  --light: #1b1b1b;
+  --light-medium: #282828;
 }
 
 body {

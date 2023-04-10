@@ -1,30 +1,35 @@
 <template>
-  <div class="race-content">
-    <RaceInformation :race="raceInformation"></RaceInformation>
-    <SelectComponent :values="raceNames" @select="selectRace"></SelectComponent>
-  </div>
-  <TableComponent
-    :headers="['posicao', 'piloto', 'equipe', 'pontos ganhos', 'status']"
-    :table-style="$style.table"
-    :max-rows="9"
-  >
-    <ul
-      class="table-body"
-      v-for="(
-        { position, points, status, Driver, Constructor }, index
-      ) in race.Results"
-      :key="index"
-      :style="{ gridTemplateColumns: $style.table }"
+  <article class="races">
+    <div class="race-content">
+      <RaceInformation :race="raceInformation"></RaceInformation>
+      <SelectComponent
+        :values="raceNames"
+        @select="selectRace"
+      ></SelectComponent>
+    </div>
+    <TableComponent
+      :headers="['posicao', 'piloto', 'equipe', 'pontos ganhos', 'status']"
+      :table-style="$style.table"
+      :max-rows="9"
     >
-      <li>{{ position }}</li>
-      <li>
-        {{ Driver.givenName }} <span>{{ Driver.familyName }}</span>
-      </li>
-      <li>{{ Constructor.name }}</li>
-      <li>{{ points }}</li>
-      <li>{{ status }}</li>
-    </ul>
-  </TableComponent>
+      <ul
+        class="table-body"
+        v-for="(
+          { position, points, status, Driver, Constructor }, index
+        ) in race.Results"
+        :key="index"
+        :style="{ gridTemplateColumns: $style.table }"
+      >
+        <li>{{ position }}</li>
+        <li>
+          {{ Driver.givenName }} <span>{{ Driver.familyName }}</span>
+        </li>
+        <li>{{ Constructor.name }}</li>
+        <li>{{ points }}</li>
+        <li>{{ status }}</li>
+      </ul>
+    </TableComponent>
+  </article>
 </template>
 
 <script setup>
@@ -66,6 +71,12 @@ const raceInformation = computed(() => {
 </style>
 
 <style scoped>
+.races{
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
 .race-content {
   width: 100%;
   display: flex;

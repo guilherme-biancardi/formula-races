@@ -89,14 +89,10 @@ onMounted(setYearsOfSeasons);
 
 <style scoped>
 .light header {
-  --input: #fff;
-  --input-border: #ddd;
   --icon: #888;
 }
 
 .dark header {
-  --input: #1b1b1b;
-  --input-border: #282828;
   --icon: #666;
 }
 
@@ -114,8 +110,8 @@ header {
 }
 
 .input-search input {
-  background-color: var(--input);
-  border: 1px solid var(--input-border);
+  background-color: var(--light);
+  border: 1px solid var(--light-medium);
   border-radius: 8px;
   color: var(--text);
 }

@@ -2,7 +2,11 @@
   <MenuComponent></MenuComponent>
   <section>
     <SearchComponent></SearchComponent>
-    <RouterView name="app"></RouterView>
+    <RouterView v-slot="{ Component }" name="app">
+      <Transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </Transition>
+    </RouterView>
   </section>
 </template>
 
@@ -12,7 +16,7 @@ import SearchComponent from "./SearchComponent.vue";
 import { useFormulaStore } from "../stores/formulaStore";
 
 const formulaStore = useFormulaStore();
-await formulaStore.getAll()
+await formulaStore.getAll();
 </script>
 
 <style scoped>
@@ -23,5 +27,15 @@ section {
   width: calc(100% - 70px);
   margin-left: 70px;
   padding: 0 10%;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(12px);
 }
 </style>

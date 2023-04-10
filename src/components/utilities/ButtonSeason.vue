@@ -12,19 +12,9 @@ defineProps({
 </script>
 
 <style scoped>
-.light button {
-  --button: #fff;
-  --button-border: #ddd;
-}
-
-.dark button{
-  --button: #1b1b1b;
-  --button-border: #282828;
-}
-
 button {
-  background-color: var(--button);
-  border: 1px solid var(--button-border);
+  background-color: var(--light);
+  border: 1px solid var(--light-medium);
   border-radius: 8px;
   padding: 4px 10px;
   font-size: 0.8em;
