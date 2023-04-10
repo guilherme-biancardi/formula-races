@@ -21,9 +21,21 @@ export const useFormulaStore = defineStore("formula", () => {
   const getRaces = computed(() => state.races);
 
   const setSeason = (season) => (state.season = season);
-  const setDrivers = (drivers) => (state.drivers = drivers);
-  const setTeams = (teams) => (state.teams = teams);
-  const setRaces = (races) => (state.races = races);
+
+  const setDrivers = (drivers) => {
+    const [driversList] = drivers.data.MRData.StandingsTable.StandingsLists;
+    state.drivers = driversList.DriverStandings;
+  };
+
+  const setTeams = (teams) => {
+    const [constructorList] = teams.data.MRData.StandingsTable.StandingsLists;
+    state.teams = constructorList?.ConstructorStandings;
+  };
+
+  const setRaces = (races) => {
+    const racesList = races.data.MRData.RaceTable.Races;
+    state.races = racesList;
+  };
 
   const getDriversStandings = async () =>
     await api.get(`${getSeason.value}/driverStandings.json?limit=1000`);
@@ -34,21 +46,17 @@ export const useFormulaStore = defineStore("formula", () => {
   const getRacesResults = async () =>
     await api.get(`${getSeason.value}/results.json?limit=1000`);
 
-  const getAll = () =>
-    Promise.all([
+  const getAll = async () => {
+    const [drivers, teams, races] = await Promise.all([
       getDriversStandings(),
       getTeamsStandings(),
       getRacesResults(),
-    ]).then(([drivers, teams, races]) => {
-      const [driversList] = drivers.data.MRData.StandingsTable.StandingsLists;
-      setDrivers(driversList.DriverStandings);
+    ]);
 
-      const [constructorList] = teams.data.MRData.StandingsTable.StandingsLists;
-      setTeams(constructorList?.ConstructorStandings);
-
-      const racesList = races.data.MRData.RaceTable.Races;
-      setRaces(racesList);
-    });
+    setDrivers(drivers);
+    setTeams(teams);
+    setRaces(races);
+  };
 
   return { getSeason, getDrivers, getTeams, getRaces, setSeason, getAll };
 });
