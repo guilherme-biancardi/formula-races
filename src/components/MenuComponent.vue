@@ -13,8 +13,11 @@
         <p class="menu-tooltip">{{ item.tooltip }}</p>
       </li>
     </ul>
-    <button class="btn-settings">
-      <IconComponent :path="mdiCog" :size="28"></IconComponent>
+    <button
+      class="btn-settings"
+      @click="state.isDarkTheme = !state.isDarkTheme"
+    >
+      <IconComponent :path="themeIcon" :size="28"></IconComponent>
     </button>
   </nav>
 </template>
@@ -22,20 +25,32 @@
 <script setup>
 import {
   mdiChartBoxOutline,
-  mdiCog,
   mdiFlagCheckered,
   mdiRacingHelmet,
   mdiTools,
+  mdiWeatherNight,
+  mdiWeatherSunny,
 } from "@mdi/js";
-import { computed, reactive } from "vue";
-import { RouterLink, useRoute } from "vue-router";
+import { computed, reactive, watch } from "vue";
+import { useRoute } from "vue-router";
 import IconComponent from "./utilities/IconComponent.vue";
+import { useAppStore } from "../stores/appStore";
+
+const appStore = useAppStore();
+const themeIcon = computed(() => {
+  const icons = {
+    light: mdiWeatherNight,
+    dark: mdiWeatherSunny,
+  };
+
+  return icons[appStore.getTheme];
+});
 
 const route = useRoute();
-
 const currentRoute = computed(() => route.name);
 
 const state = reactive({
+  isDarkTheme: appStore.getTheme === 'dark',
   menuItems: [
     {
       icon: mdiRacingHelmet,
@@ -59,6 +74,11 @@ const state = reactive({
     },
   ],
 });
+
+watch(
+  () => state.isDarkTheme,
+  (isDark) => appStore.setTheme(isDark ? "dark" : "light")
+);
 </script>
 
 <style scoped>
@@ -104,7 +124,7 @@ nav {
   color: #fff;
 }
 
-.menu-item a:hover ~ .menu-tooltip{
+.menu-item a:hover ~ .menu-tooltip {
   opacity: 1;
 }
 
@@ -122,7 +142,7 @@ nav {
   min-width: 125px;
   text-align: center;
   text-transform: capitalize;
-  transition: all .1s ease;
+  transition: all 0.1s ease;
   z-index: 1;
 }
 

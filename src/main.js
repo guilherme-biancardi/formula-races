@@ -2,17 +2,14 @@ import { createApp } from "vue";
 
 import App from "./App.vue";
 import router from "./router";
+import piniaPersist from "pinia-plugin-persist";
 
-import "./assets/css/main.css";
 import { pinia } from "./stores";
-import { useAppStore } from "./stores/appStore";
 
-const appStore = useAppStore(pinia);
-
-// verifica se há um tema na store app, caso não seta o tema padrão
-appStore.setTheme(appStore.getTheme || import.meta.env.VITE_APP_THEME);
+import './assets/css/main.css'
 
 const app = createApp(App);
+pinia.use(piniaPersist);
 
 app.use(pinia);
 app.use(router);
