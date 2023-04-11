@@ -14,14 +14,8 @@
 import MenuComponent from "./MenuComponent.vue";
 import SearchComponent from "./SearchComponent.vue";
 import { useFormulaStore } from "../stores/formulaStore";
-import { useAppStore } from "../stores/appStore";
 
-const appStore = useAppStore();
 const formulaStore = useFormulaStore();
-
-// verifica se há um tema na store app, caso não seta o tema padrão
-await appStore.setTheme(appStore.getTheme || import.meta.env.VITE_APP_THEME);
-
 await formulaStore.getAll();
 </script>
 
