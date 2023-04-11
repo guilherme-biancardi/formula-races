@@ -9,7 +9,7 @@
       <div class="input-search">
         <input
           type="text"
-          placeholder="Pesquise por uma temporada"
+          :placeholder="language?.searchPlaceholder"
           v-model="state.inputSeason"
           maxlength="4"
           minlength="4"
@@ -42,10 +42,14 @@ import { useDatetime } from "../utils/datetime";
 import { minSeasonYear } from "../utils/formulaRules";
 import IconComponent from "./utilities/IconComponent.vue";
 import ButtonSeason from "./utilities/ButtonSeason.vue";
+import { useAppStore } from "../stores/appStore";
+
+const appStore = useAppStore();
+const language = computed(() => appStore.getLanguageFile)
 
 const formulaStore = useFormulaStore();
-const { parseDatetime, getNow } = useDatetime();
 
+const { parseDatetime, getNow } = useDatetime();
 const currentYear = getNow().year
 
 const season = computed(() => parseDatetime(formulaStore.getSeason, "yyyy"));

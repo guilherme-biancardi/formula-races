@@ -8,7 +8,7 @@
       ></SelectComponent>
     </div>
     <TableComponent
-      :headers="['posicao', 'piloto', 'equipe', 'pontos ganhos', 'status']"
+      :headers="language?.headers"
       :table-style="$style.table"
       :max-rows="9"
     >
@@ -38,8 +38,12 @@ import SelectComponent from "../components/utilities/SelectComponent.vue";
 import { useFormulaStore } from "../stores/formulaStore";
 import RaceInformation from "../components/utilities/RaceInformation.vue";
 import TableComponent from "../components/utilities/TableComponent.vue";
+import { useAppStore } from "../stores/appStore";
 
 const formulaStore = useFormulaStore();
+
+const appStore = useAppStore();
+const language = computed(() => appStore.getLanguageFile?.races);
 
 const state = reactive({
   raceSelected: 0,
@@ -71,7 +75,7 @@ const raceInformation = computed(() => {
 </style>
 
 <style scoped>
-.races{
+.races {
   display: flex;
   flex-direction: column;
   row-gap: 16px;

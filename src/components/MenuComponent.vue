@@ -31,12 +31,15 @@ import {
   mdiWeatherNight,
   mdiWeatherSunny,
 } from "@mdi/js";
-import { computed, reactive, watch } from "vue";
+import { computed, onMounted, reactive, watch } from "vue";
 import { useRoute } from "vue-router";
 import IconComponent from "./utilities/IconComponent.vue";
 import { useAppStore } from "../stores/appStore";
 
 const appStore = useAppStore();
+
+const language = computed(() => appStore.getLanguageFile);
+
 const themeIcon = computed(() => {
   const icons = {
     light: mdiWeatherNight,
@@ -50,27 +53,27 @@ const route = useRoute();
 const currentRoute = computed(() => route.name);
 
 const state = reactive({
-  isDarkTheme: appStore.getTheme === 'dark',
+  isDarkTheme: appStore.getTheme === "dark",
   menuItems: [
     {
       icon: mdiRacingHelmet,
       route: "drivers",
-      tooltip: "pilotos",
+      tooltip: "",
     },
     {
       icon: mdiTools,
       route: "teams",
-      tooltip: "equipes",
+      tooltip: "",
     },
     {
       icon: mdiFlagCheckered,
       route: "races",
-      tooltip: "corridas",
+      tooltip: "",
     },
     {
       icon: mdiChartBoxOutline,
       route: "graphics",
-      tooltip: "gráficos",
+      tooltip: "",
     },
   ],
 });
@@ -78,6 +81,12 @@ const state = reactive({
 watch(
   () => state.isDarkTheme,
   (isDark) => appStore.setTheme(isDark ? "dark" : "light")
+);
+
+onMounted(() =>
+  state.menuItems.forEach(
+    (item, index) => (item.tooltip = language.value?.menuTooltips.at(index))
+  )
 );
 </script>
 

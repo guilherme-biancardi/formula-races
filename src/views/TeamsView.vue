@@ -1,6 +1,6 @@
 <template>
   <TableComponent
-    :headers="['posicao', 'equipe', 'vitórias', 'pontos']"
+    :headers="language?.headers"
     :table-style="$style.table"
     :max-rows="10"
     v-if="formulaStore.getTeams"
@@ -27,7 +27,7 @@
       </li>
     </ul>
   </TableComponent>
-  <p v-else>sem dados</p>
+  <p v-else>{{ language?.noDataMessage }}</p>
 </template>
 
 <script setup>
@@ -35,8 +35,13 @@ import TableComponent from "../components/utilities/TableComponent.vue";
 import IconComponent from "../components/utilities/IconComponent.vue";
 import { mdiOpenInNew } from "@mdi/js";
 import { useFormulaStore } from "../stores/formulaStore";
+import { useAppStore } from "../stores/appStore";
+import { computed } from "vue";
 
 const formulaStore = useFormulaStore();
+const appStore = useAppStore();
+
+const language = computed(() => appStore.getLanguageFile?.teams);
 </script>
 
 <style module>

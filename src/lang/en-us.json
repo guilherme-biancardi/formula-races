@@ -1,0 +1,15 @@
+{
+  "searchPlaceholder": "Search for a season",
+  "loading": "loading...",
+  "menuTooltips": ["drivers", "teams", "races", "graphics"],
+  "drivers": {
+    "headers": ["position", "driver", "team", "points"]
+  },
+  "teams": {
+    "headers": ["position", "team", "wins", "points"],
+    "noDataMessage": "no data"
+  },
+  "races": {
+    "headers": ["position", "driver", "team", "points earned", "status"]
+  }
+}

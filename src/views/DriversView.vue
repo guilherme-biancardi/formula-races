@@ -1,6 +1,6 @@
 <template>
   <TableComponent
-    :headers="['posicao', 'piloto', 'equipe', 'pontos']"
+    :headers="language?.headers"
     :table-style="$style.table"
     :max-rows="10"
   >
@@ -32,8 +32,13 @@ import TableComponent from "../components/utilities/TableComponent.vue";
 import IconComponent from "../components/utilities/IconComponent.vue";
 import { mdiOpenInNew } from "@mdi/js";
 import { useFormulaStore } from "../stores/formulaStore";
+import { useAppStore } from "../stores/appStore";
+import { computed } from "vue";
 
-const formulaStore = useFormulaStore()
+const formulaStore = useFormulaStore();
+const appStore = useAppStore();
+
+const language = computed(() => appStore.getLanguageFile?.drivers)
 </script>
 
 <style module>
