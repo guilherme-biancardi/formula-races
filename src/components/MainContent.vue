@@ -1,13 +1,15 @@
 <template>
-  <MenuComponent></MenuComponent>
-  <section>
-    <SearchComponent></SearchComponent>
-    <RouterView v-slot="{ Component }" name="app">
-      <Transition name="fade" mode="out-in">
-        <component :is="Component" />
-      </Transition>
-    </RouterView>
-  </section>
+  <div>
+    <MenuComponent></MenuComponent>
+    <section>
+      <SearchComponent></SearchComponent>
+      <RouterView v-slot="{ Component }" name="app">
+        <Transition name="view" mode="out-in">
+          <component :is="Component" />
+        </Transition>
+      </RouterView>
+    </section>
+  </div>
 </template>
 
 <script setup>
@@ -20,6 +22,13 @@ await formulaStore.getAll();
 </script>
 
 <style scoped>
+div {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
 section {
   display: flex;
   flex-direction: column;
@@ -29,12 +38,12 @@ section {
   padding: 0 10%;
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.view-enter-active,
+.view-leave-active {
   transition: all 0.3s ease;
 }
-.fade-enter-from,
-.fade-leave-to {
+.view-enter-from,
+.view-leave-to {
   opacity: 0;
   transform: translateY(12px);
 }

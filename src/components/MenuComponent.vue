@@ -31,13 +31,12 @@ import {
   mdiWeatherNight,
   mdiWeatherSunny,
 } from "@mdi/js";
-import { computed, onMounted, reactive, watch } from "vue";
+import { computed, reactive, watch } from "vue";
 import { useRoute } from "vue-router";
 import IconComponent from "./utilities/IconComponent.vue";
 import { useAppStore } from "../stores/appStore";
 
 const appStore = useAppStore();
-
 const language = computed(() => appStore.getLanguageFile);
 
 const themeIcon = computed(() => {
@@ -83,10 +82,13 @@ watch(
   (isDark) => appStore.setTheme(isDark ? "dark" : "light")
 );
 
-onMounted(() =>
-  state.menuItems.forEach(
-    (item, index) => (item.tooltip = language.value?.menuTooltips.at(index))
-  )
+watch(
+  language,
+  (lang) =>
+    state.menuItems.forEach(
+      (item, index) => (item.tooltip = lang?.menuTooltips.at(index))
+    ),
+  { immediate: true }
 );
 </script>
 
