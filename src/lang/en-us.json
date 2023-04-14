@@ -1,6 +1,5 @@
 {
   "searchPlaceholder": "Search for a season",
-  "loading": "loading...",
   "menuTooltips": ["drivers", "teams", "races", "graphics"],
   "drivers": {
     "headers": ["position", "driver", "team", "points"]
