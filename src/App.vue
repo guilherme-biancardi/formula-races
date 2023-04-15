@@ -46,7 +46,7 @@ section {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 1s ease;
+  transition: all .8s ease;
 }
 
 .fade-leave-active{

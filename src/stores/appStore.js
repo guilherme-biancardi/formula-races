@@ -19,11 +19,15 @@ export const useAppStore = defineStore(
     const setTheme = (theme) => (state.theme = theme);
     const setLanguage = (language) => (state.language = language);
 
-    watch(getTheme, (theme) => {
-      const body = document.body;
-      body.removeAttribute("class");
-      body.classList.add(theme);
-    });
+    watch(
+      getTheme,
+      (theme) => {
+        const body = document.body;
+        body.removeAttribute("class");
+        body.classList.add(theme);
+      },
+      { immediate: true }
+    );
 
     watch(getLanguage, async (language) => {
       const languageFile = await useLanguage(language);

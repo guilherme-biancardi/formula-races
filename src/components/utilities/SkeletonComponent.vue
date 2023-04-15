@@ -29,13 +29,13 @@ const style = computed(() => ({
 }
 
 .light .skeleton {
-  --background-light: #e6e6e6;
+  --background-light: #e0e0e0;
   --background-medium: #ededed;
 }
 
 .dark .skeleton {
-  --background-light: #333;
-  --background-medium: #444;
+  --background-light: #2c2c2c;
+  --background-medium: #353535;
 }
 
 .skeleton {
