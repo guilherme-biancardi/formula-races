@@ -1,20 +1,38 @@
 <template>
-  <select @change="emit('select', Number($event.target.value))">
+  <select @change="emit('select', state.value)" v-model="state.value">
     <option :value="null" v-if="defaultValue" disabled>
       {{ defaultValue }}
     </option>
-    <option :value="index" v-for="(value, index) in values" :key="index">
+    <option
+      :value="index"
+      v-for="(value, index) in values"
+      :key="index"
+      :disabled="disableList ? disableItems(index) : false"
+    >
       {{ value }}
     </option>
   </select>
 </template>
 
 <script setup>
+import { reactive } from "vue";
+
 const emit = defineEmits(["select"]);
 
-defineProps({
+const props = defineProps({
   defaultValue: String,
   values: Array,
+  valueSelected: {
+    type: Number,
+    default: 0,
+  },
+  disableList: Array,
+});
+
+const disableItems = (value) => props.disableList.includes(value);
+
+const state = reactive({
+  value: props.valueSelected ?? null,
 });
 </script>
 

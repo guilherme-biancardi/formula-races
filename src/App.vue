@@ -43,18 +43,4 @@ section {
   margin-left: 70px;
   padding: 0 10%;
 }
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all .8s ease;
-}
-
-.fade-leave-active{
-  position: absolute;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>
