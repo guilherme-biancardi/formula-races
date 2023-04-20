@@ -15,7 +15,7 @@
       <ul
         class="table-body"
         v-for="(
-          { position, points, status, Driver, Constructor }, index
+          { position, points, Driver, Constructor }, index
         ) in race.Results"
         :key="index"
         :style="{ gridTemplateColumns: $style.table }"
@@ -26,7 +26,6 @@
         </li>
         <li>{{ Constructor.name }}</li>
         <li>{{ points }}</li>
-        <li>{{ status }}</li>
       </ul>
     </TableComponent>
   </article>
@@ -70,7 +69,7 @@ const raceInformation = computed(() => {
 
 <style module>
 :export {
-  table: repeat(5, 1fr);
+  table: repeat(4, 1fr);
 }
 </style>
 

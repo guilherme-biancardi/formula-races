@@ -5,7 +5,7 @@
       <SearchComponent></SearchComponent>
       <RouterView v-slot="{ Component }" name="app">
         <Transition name="view" mode="out-in">
-          <component :is="Component" />
+            <component :is="Component" />
         </Transition>
       </RouterView>
     </section>

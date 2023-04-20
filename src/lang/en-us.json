@@ -9,6 +9,6 @@
     "noDataMessage": "no data"
   },
   "races": {
-    "headers": ["position", "driver", "team", "points earned", "status"]
+    "headers": ["position", "driver", "team", "points earned"]
   }
 }

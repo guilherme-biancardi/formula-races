@@ -22,7 +22,7 @@
 }
 
 .light {
-  --background: #efefef;
+  --background: #ececec;
   --text: #333;
   --primary: #e10600;
   --light: #fff;
@@ -81,4 +81,18 @@ ul {
 a {
   text-decoration: none;
   color: var(--text);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .8s ease;
+}
+
+.fade-leave-active{
+  position: absolute;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
