@@ -5,7 +5,7 @@ services:
     image: node:alpine
     container_name: formula.one.races
     ports:
-      - 8443:8443
+      - 4000:4000
     working_dir: /var/www/formula.one.races
     volumes:
       - .:/var/www/formula.one.races
