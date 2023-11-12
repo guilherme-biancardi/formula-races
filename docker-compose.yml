@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  frontend: 
+    image: node:alpine
+    container_name: formula.one.races
+    ports:
+      - 8443:8443
+    working_dir: /var/www/formula.one.races
+    volumes:
+      - .:/var/www/formula.one.races
+    networks:
+      - formula_network
+    tty: true
+    command: sh ./run.sh
+
+networks:
+  formula_network:
+    driver: bridge

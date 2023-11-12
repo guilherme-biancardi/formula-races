@@ -1,0 +1,99 @@
+@font-face {
+  font-family: "formula-regular";
+  src: url("./font/Formula1-Regular.ttf");
+}
+
+@font-face {
+  font-family: "formula-bold";
+  src: url("./font/Formula1-Bold.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "formula-regular", sans-serif;
+  transition: border 0.2s ease, background-color 0.2s ease;
+}
+
+:root {
+  --font-regular: "formula-regular", sans-serif;
+  --font-bold: "formula-bold", sans-serif;
+  --menu-width: 70px;
+}
+
+.light {
+  --background: #ececec;
+  --text: #333;
+  --primary: #e10600;
+  --light: #fff;
+  --light-medium: #ddd;
+}
+
+.dark {
+  --background: #222;
+  --text: #eee;
+  --primary: #df332e;
+  --light: #1b1b1b;
+  --light-medium: #282828;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+*::-webkit-scrollbar {
+  width: 2px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 8px;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background);
+  color: var(--text);
+}
+
+input,
+button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .8s ease;
+}
+
+.fade-leave-active{
+  position: absolute;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
