@@ -5,15 +5,17 @@
         <RouterLink
           :to="{ name: item.name }"
           :class="{ 'item-selected': route.name === item.name }"
+          :aria-label="item.label"
         >
           <IconComponent :="item.icon"></IconComponent>
         </RouterLink>
         <span class="menu-tooltip">{{ item.label }}</span>
       </li>
-      <li class="menu-item" v-if="currentThemeAction">
-        <button title="Alterar Tema" @click="appStore.setTheme(currentThemeAction.changeTo)">
-          <IconComponent :="currentThemeAction.icon"></IconComponent>
+      <li class="menu-item">
+        <button aria-label="Alterar Tema" @click="appStore.toggleTheme">
+          <IconComponent :="{ path: themeIcon, size: 28}"></IconComponent>
         </button>
+        <span class="menu-tooltip">Alterar Tema</span>
       </li>
     </ul>
   </nav>
@@ -24,35 +26,12 @@ import { computed, shallowReactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { mdiRacingHelmet, mdiWeatherNight, mdiWeatherSunny } from '@mdi/js';
 import IconComponent, { type Icon } from './utils/IconComponent.vue';
-import { useAppStore, type AppStoreStorage } from '@/stores/appStore';
+import { useAppStore } from '@/stores/appStore';
 
 const route = useRoute();
 const appStore = useAppStore();
 
-interface ThemeAction {
-  icon: Icon;
-  changeTo: 'light' | 'dark';
-}
-
-const themeActions = new Map<AppStoreStorage['theme'], ThemeAction>();
-
-themeActions.set('light', {
-  icon: {
-    path: mdiWeatherNight,
-    size: 28
-  },
-  changeTo: 'dark'
-});
-
-themeActions.set('dark', {
-  icon: {
-    path: mdiWeatherSunny,
-    size: 28
-  },
-  changeTo: 'light'
-});
-
-const currentThemeAction = computed(() => themeActions.get(appStore.getTheme));
+const themeIcon = computed(() => (appStore.theme ? mdiWeatherSunny : mdiWeatherNight));
 
 interface MenuItem {
   label: string;
@@ -87,6 +66,7 @@ const state = shallowReactive<MenuState>({
 }
 
 .menu-list {
+  position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -94,7 +74,6 @@ const state = shallowReactive<MenuState>({
 }
 
 .menu-item {
-  position: relative;
   display: grid;
   place-items: center;
 }
@@ -130,10 +109,11 @@ const state = shallowReactive<MenuState>({
 }
 
 .menu-tooltip {
+  width: max-content;
   opacity: 0;
   position: absolute;
   padding: 5px 16px;
-  left: calc(100% + 10px);
+  left: calc(100% + 8px);
   background-color: var(--primary);
   border-radius: 4px;
   color: #fff;

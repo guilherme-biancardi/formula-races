@@ -1,12 +1,8 @@
 import { getCurrentYear } from '@/ts/datetime';
-import { useLocalStorage } from '@vueuse/core';
+import { useDark, useToggle, type BasicColorSchema } from '@vueuse/core';
 import axios, { type AxiosInstance } from 'axios';
 import { defineStore } from 'pinia';
-import { computed, reactive, watch } from 'vue';
-
-export interface AppStoreStorage {
-  theme: 'light' | 'dark' | null;
-}
+import { computed, reactive } from 'vue';
 
 export interface AppStoreState {
   api: AxiosInstance;
@@ -14,9 +10,12 @@ export interface AppStoreState {
 }
 
 export const useAppStore = defineStore('app', () => {
-  const storage = useLocalStorage('app', {
-    theme: import.meta.env.VITE_THEME_DEFAULT
-  } as AppStoreStorage);
+  const theme = useDark({
+    initialValue: import.meta.env.VITE_THEME_DEFAULT as BasicColorSchema,
+    attribute: 'theme',
+    valueLight: 'light',
+    storageKey: 'app-theme'
+  });
 
   const state = reactive<AppStoreState>({
     api: axios.create({
@@ -25,28 +24,15 @@ export const useAppStore = defineStore('app', () => {
     season: getCurrentYear()
   });
 
-  const getTheme = computed(() => storage.value.theme);
   const useApi = computed(() => state.api)
   const getSeason = computed(() => state.season)
 
-  const setTheme = (theme: AppStoreStorage['theme']) => (storage.value.theme = theme);
-
-  watch(
-    getTheme,
-    (theme) => {
-      if (theme) {
-        const body = document.body;
-        body.removeAttribute('class');
-        body.classList.add(theme);
-      }
-    },
-    { immediate: true }
-  );
+  const toggleTheme = () => useToggle(theme)();
 
   return {
-    getTheme,
+    theme,
+    toggleTheme,
     useApi,
     getSeason,
-    setTheme
   };
 });

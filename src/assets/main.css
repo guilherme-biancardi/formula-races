@@ -13,16 +13,15 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "formula-regular", sans-serif;
-  transition: border 0.2s ease, background-color 0.2s ease;
 }
 
 :root {
   --font-regular: "formula-regular", sans-serif;
   --font-bold: "formula-bold", sans-serif;
-  --menu-width: 70px;
+  --menu-width: 72px;
 }
 
-.light {
+[theme="light"] {
   --background: #ececec;
   --text: #333;
   --primary: #e10600;
@@ -30,7 +29,7 @@
   --light-medium: #ddd;
 }
 
-.dark {
+[theme="dark"] {
   --background: #222;
   --text: #eee;
   --primary: #df332e;
