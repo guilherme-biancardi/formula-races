@@ -1,8 +1,8 @@
 <template>
   <div class="search-season-content">
     <div class="season-buttons-content">
-      <label for="season-buttons-list">Select Season:</label>
-      <menu id="season-buttons-list">
+      <label for="season-buttons">Select Season:</label>
+      <menu class="season-buttons-list" name="season-buttons">
         <li v-if="previousYear >= appStore.getMinimumYear">
           <button class="season-button" @click="seasonSelected = previousYear">
             {{ previousYear }}
@@ -79,14 +79,14 @@ watch(seasonSelected, updateSeason);
   font-size: 0.95em;
 }
 
-#season-buttons-list {
+.season-buttons-list {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-#season-buttons-list li:last-child {
+.season-buttons-list li:last-child {
   margin-left: auto;
   font-family: var(--font-bold);
   color: var(--primary);
