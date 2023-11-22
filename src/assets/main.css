@@ -13,12 +13,13 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "formula-regular", sans-serif;
+  list-style: none;
 }
 
 :root {
   --font-regular: "formula-regular", sans-serif;
   --font-bold: "formula-bold", sans-serif;
-  --menu-width: 72px;
+  --menu-width: 70px;
 }
 
 [theme="light"] {
@@ -27,6 +28,7 @@
   --primary: #e10600;
   --light: #fff;
   --light-medium: #ddd;
+  --text-medium: #555;
 }
 
 [theme="dark"] {
@@ -35,6 +37,7 @@
   --primary: #df332e;
   --light: #1b1b1b;
   --light-medium: #282828;
+  --text-medium: #ccc;
 }
 
 body {
@@ -74,10 +77,6 @@ button {
   cursor: pointer;
 }
 
-ul {
-  list-style: none;
-}
-
 a {
   text-decoration: none;
   color: var(--text);
@@ -85,7 +84,7 @@ a {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all .8s ease;
+  transition: all .4s ease;
 }
 
 .fade-leave-active{

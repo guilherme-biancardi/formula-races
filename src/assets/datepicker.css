@@ -1,0 +1,11 @@
+*{
+  --dp-primary-color: var(--primary);
+  --dp-border-radius: 8px;
+  --dp-input-padding: 8px 32px 8px 12px;
+}
+
+.dp__theme_dark {
+  --dp-background-color: #1b1b1b;
+  --dp-border-color-hover: #555;
+}
+

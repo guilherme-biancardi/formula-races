@@ -6,6 +6,10 @@ import {
 } from '@/requests/formula/drivers';
 import { defineStore } from 'pinia';
 import { computed, shallowReactive } from 'vue';
+import { useAppStore } from './appStore';
+import { pinia } from '.';
+
+const appStore = useAppStore(pinia);
 
 interface FormulaStoreState {
   drivers: DriverStandings[];
@@ -24,7 +28,9 @@ export const useFormulaStore = defineStore('formula', () => {
   };
 
   const requestAll = async () => {
-    const [drivers] = await Promise.all([getDriversRequest.execute()]);
+    const driversRequest = getDriversRequest({ season: appStore.getSeason });
+
+    const [drivers] = await Promise.all([driversRequest.execute()]);
 
     setDrivers(drivers.data);
   };

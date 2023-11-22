@@ -1,6 +1,6 @@
 <template>
   <nav class="menu-content">
-    <ul class="menu-list">
+    <menu class="menu-list">
       <li v-for="(item, index) in state.menuItems" :key="index" class="menu-item">
         <RouterLink
           :to="{ name: item.name }"
@@ -12,12 +12,12 @@
         <span class="menu-tooltip">{{ item.label }}</span>
       </li>
       <li class="menu-item">
-        <button aria-label="Alterar Tema" @click="appStore.toggleTheme">
-          <IconComponent :="{ path: themeIcon, size: 28}"></IconComponent>
+        <button aria-label="Change Theme" @click="appStore.toggleTheme">
+          <IconComponent :="{ path: themeIcon, size: 28 }"></IconComponent>
         </button>
-        <span class="menu-tooltip">Alterar Tema</span>
+        <span class="menu-tooltip">Change Theme</span>
       </li>
-    </ul>
+    </menu>
   </nav>
 </template>
 
@@ -31,7 +31,7 @@ import { useAppStore } from '@/stores/appStore';
 const route = useRoute();
 const appStore = useAppStore();
 
-const themeIcon = computed(() => (appStore.theme ? mdiWeatherSunny : mdiWeatherNight));
+const themeIcon = computed(() => (appStore.theme ? mdiWeatherNight : mdiWeatherSunny));
 
 interface MenuItem {
   label: string;
