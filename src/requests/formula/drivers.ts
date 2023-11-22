@@ -1,11 +1,8 @@
-import { useAppStore } from '@/stores/appStore';
-import { pinia } from '@/ts';
-import { createRequest, type ApiResponse } from '..';
-
-const appStore = useAppStore(pinia);
+import { useRequest } from '@/ts/request';
+import { type ApiResponse, type RequestFactory } from '..';
 
 interface GetDriversRequest {
-  limit: number;
+  season: number;
 }
 
 interface DriverConstructor {
@@ -38,18 +35,22 @@ export interface GetDriversResponse {
   StandingsTable: {
     StandingsLists: [
       {
-        DriverStandings: DriverStandings[]
+        DriverStandings: DriverStandings[];
       }
     ];
   };
 }
 
-const { axios, params, ...getDriversRequest } = createRequest<
+const { request } = useRequest();
+
+export const getDriversRequest: RequestFactory<
   GetDriversRequest,
   ApiResponse<GetDriversResponse>
->(appStore.useApi, { limit: 1000 });
-
-getDriversRequest.execute = () =>
-  axios.get(`${appStore.getSeason}/driverStandings.json`, { params });
-
-export { getDriversRequest };
+> = (params) => ({
+  execute: () =>
+    request.get(`${params.season}/driverStandings.json`, {
+      params: {
+        limit: 1000
+      }
+    })
+});

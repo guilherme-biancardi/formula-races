@@ -1,16 +1,15 @@
-import type { AxiosInstance, AxiosResponse } from "axios";
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-interface Request<Req, Res> {
-  axios: AxiosInstance;
-  params?: Req;
+interface Request<Res> {
   execute: () => Promise<AxiosResponse<Res>>;
+}
+
+export interface ApiRequest {
+  limit: number;
 }
 
 export interface ApiResponse<Res> {
   MRData: Res;
 }
 
-export const createRequest = <Req, Res>(axios: AxiosInstance, params?: Req) => <Request<Req, Res>>({
-    axios,
-    params, 
-});
+export type RequestFactory<Req, Res> = (params: Req, options?: AxiosRequestConfig) => Request<Res>;
