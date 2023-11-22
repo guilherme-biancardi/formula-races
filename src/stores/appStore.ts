@@ -5,6 +5,7 @@ import { defineStore } from 'pinia';
 import { computed, reactive } from 'vue';
 
 const { getCurrentYear } = useDatetime();
+const currentYear = getCurrentYear();
 
 export interface AppStoreState {
   api: AxiosInstance;
@@ -25,9 +26,9 @@ export const useAppStore = defineStore('app', () => {
     api: axios.create({
       baseURL: import.meta.env.VITE_API_URL
     }),
-    season: getCurrentYear(),
+    season: currentYear,
     minYear: 1950,
-    maxYear: getCurrentYear()
+    maxYear: currentYear
   });
 
   const useApi = computed(() => state.api);
