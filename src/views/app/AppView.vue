@@ -2,7 +2,7 @@
   <MenuBar></MenuBar>
   <section>
     <SearchSeason></SearchSeason>
-    <RouterView name="app" class="app-content"></RouterView>
+    <RouterView name="app"></RouterView>
   </section>
 </template>
 
@@ -11,7 +11,6 @@ import MenuBar from '@/components/MenuBar.vue';
 import SearchSeason from '@/components/utils/SearchSeason.vue';
 import { useFormulaStore } from '@/stores/formulaStore';
 import { RouterView } from 'vue-router';
-import '@/assets/contents/appContent.css';
 
 const formulaStore = useFormulaStore();
 await formulaStore.requestAll();
