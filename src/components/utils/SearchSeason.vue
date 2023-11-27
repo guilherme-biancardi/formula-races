@@ -88,10 +88,13 @@ watch(seasonSelected, updateSeason);
 
 .season-buttons-list li:last-child {
   margin-left: auto;
-  font-family: var(--font-bold);
   color: var(--primary);
   text-decoration: 2px solid underline;
-  font-size: 1.2em;
+}
+
+.season-buttons-list li h1 {
+  font-family: var(--font-bold);
+  font-size: 1.8em;
 }
 
 .season-button {
