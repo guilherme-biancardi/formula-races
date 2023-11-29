@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { computed, shallowReactive } from 'vue';
 import { useRoute } from 'vue-router';
-import { mdiRacingHelmet, mdiWeatherNight, mdiWeatherSunny } from '@mdi/js';
+import { mdiRacingHelmet, mdiTools, mdiWeatherNight, mdiWeatherSunny } from '@mdi/js';
 import IconComponent, { type Icon } from './utils/IconComponent.vue';
 import { useAppStore } from '@/stores/appStore';
 
@@ -52,6 +52,14 @@ const state = shallowReactive<MenuState>({
         path: mdiRacingHelmet,
         size: 28
       }
+    },
+    {
+      label: 'Teams',
+      name: 'teams',
+      icon: {
+        path: mdiTools,
+        size: 28
+      }
     }
   ]
 });
@@ -71,6 +79,7 @@ const state = shallowReactive<MenuState>({
   align-items: center;
   flex-direction: column;
   height: 100%;
+  row-gap: 10px;
 }
 
 .menu-item {

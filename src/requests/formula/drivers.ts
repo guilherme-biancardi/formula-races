@@ -1,15 +1,9 @@
 import { useRequest } from '@/ts/request';
-import { type ApiResponse, type RequestFactory } from '..';
+import { type RequestFactory, type StandingsListsResponse } from '..';
+import type { Constructor } from './teams';
 
 interface GetDriversRequest {
   season: number;
-}
-
-interface DriverConstructor {
-  constructorId: string;
-  name: string;
-  nationality: string;
-  url: string;
 }
 
 interface Driver {
@@ -24,28 +18,20 @@ interface Driver {
 }
 
 export interface DriverStandings {
-  Constructors: DriverConstructor[];
+  Constructors: Constructor[];
   Driver: Driver;
   points: string;
   position: string;
   wins: string;
 }
 
-export interface GetDriversResponse {
-  StandingsTable: {
-    StandingsLists: [
-      {
-        DriverStandings: DriverStandings[];
-      }
-    ];
-  };
-}
+export type GetDriversResponse = StandingsListsResponse<{ DriverStandings: DriverStandings[] }>;
 
 const { request } = useRequest();
 
 export const getDriversRequest: RequestFactory<
   GetDriversRequest,
-  ApiResponse<GetDriversResponse>
+  GetDriversResponse
 > = (params) => ({
   execute: () =>
     request.get(`${params.season}/driverStandings.json`, {
