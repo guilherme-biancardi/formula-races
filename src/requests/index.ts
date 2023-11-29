@@ -12,4 +12,12 @@ export interface ApiResponse<Res> {
   MRData: Res;
 }
 
+export interface StandingsListsResponse<Res> {
+  MRData: {
+    StandingsTable: {
+      StandingsLists: Res[]
+    }
+  }
+}
+
 export type RequestFactory<Req, Res> = (params: Req, options?: AxiosRequestConfig) => Request<Res>;

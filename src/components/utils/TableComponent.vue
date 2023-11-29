@@ -19,27 +19,29 @@ defineProps<Table>();
 </script>
 
 <style>
+[theme='light'] .table-content {
+  --table-item-odd: #f8f8f8;
+  --table-border: #ddd;
+}
+
+[theme='dark'] .table-content {
+  --table-item-odd: #1e1e1e;
+  --table-border: #2a2a2a;
+}
+
 .table-content {
   width: 100%;
   background-color: var(--light);
   border-radius: 8px;
 
   --item-height: 42px;
-}
-
-[theme='light'] .table-content {
-  --table-border: #f2f2f2;
-}
-
-[theme='dark'] .table-content {
-  --table-border: #2a2a2a;
+  border: 1px solid var(--table-border);
 }
 
 .table-content :is(.table-header, .table-body) {
   width: 100%;
   display: grid;
   place-items: center;
-  border-top: 1px solid var(--table-border);
 }
 
 .table-content :is(.table-header, .table-body) li {
@@ -64,6 +66,10 @@ defineProps<Table>();
 
 .table-scroll {
   overflow: auto;
-  max-height: calc(10 * var(--item-height) + 7px);
+  max-height: calc(10 * var(--item-height));
+}
+
+.table-body:nth-child(odd){
+  background-color: var(--table-item-odd);
 }
 </style>
