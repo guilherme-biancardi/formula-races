@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'formula-regular';
+  src: url('../../assets/font/Formula1-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'formula-bold';
+  src: url('../../assets/font/Formula1-Bold.ttf');
+}
+
+:root {
+  --font-regular: 'formula-regular', sans-serif;
+  --font-bold: 'formula-bold', sans-serif;
+}
+
+:export {
+  fontRegular: var(--font-regular);
+  fontBold: var(--font-bold);
+}

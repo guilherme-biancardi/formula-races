@@ -1,0 +1,44 @@
+[theme='light'] {
+  --background: #fff;
+  --soft-background: #f4f4f4;
+  --mid-background: #ededed;
+  --dark-background: #e1e1e1;
+  --darker-background: #d4d4d4;
+
+  --text: #404040;
+  --soft-text: #595959;
+  --dark-text: #262626;
+
+  --primary: #e10600;
+  --dark-primary: #ca0700;
+}
+
+[theme='dark'] {
+  --background: #151618;
+  --soft-background: #0e0f11;
+  --mid-background: #202020;
+  --dark-background: #242424;
+  --darker-background: #2d2d2d;
+
+  --text: #eee;
+  --soft-text: #c8c8c8;
+  --dark-text: #fbfbfb;
+
+  --primary: #f42b2b;
+  --dark-primary: #b80802;
+}
+
+:export {
+  background: var(--background);
+  softBackground: var(--soft-background);
+  midBackground: var(--mid-background);
+  darkBackground: var(--dark-background);
+  darkerBackground: var(--darker-background);
+
+  text: var(--text);
+  softText: var(--soft-text);
+  darkText: var(--dark-text);
+
+  primary: var(--primary);
+  darkPrimary: var(--dark-primary);
+}
